@@ -250,6 +250,9 @@ workflows:
   on_push:
     jobs:
       - build_binaries
+      - build_packages:
+          requires:
+            - build_binaries
       - static_code_checks
       - fluxtest
       - unit_test
