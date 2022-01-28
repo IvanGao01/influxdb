@@ -37,6 +37,10 @@ jobs:
             tar --exclude-vcs --exclude './tarball' -vczf "${TARBALL_NAME}" .
       - store_artifacts:
           path: tarball/
+      - persist_to_workspace:
+          root: .
+          paths:
+            - tarball
       - run:
           name: Build binaries
           command: |
@@ -68,6 +72,10 @@ jobs:
             tarsum $TMPOUTDIR ./bins/influxdb_bin_${GOOS}_${GOARCH}-${CIRCLE_SHA1}.tar.gz
       - store_artifacts:
           path: bins/
+      - persist_to_workspace:
+          root: .
+          paths:
+              - bins 
       - save_cache:
           key: influxdb-cache-v1-{{ checksum "go.mod" }}
           paths:
