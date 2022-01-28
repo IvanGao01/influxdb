@@ -38,6 +38,10 @@ jobs:
               "branch": "%s",
               "sha": "%s"
             }' "1.9" "branch" "v1.9" > "./.metadata.json"
+            #
+            # Prebuild the man pages so that consumers of the source tarball don't have to build it themselves.
+            (cd man && make build && gzip -9 ./*.1)
+
             mkdir -p ./tarball
             TARBALL_NAME="./tarball/influxdb-src-${CIRCLE_SHA1}.tar.gz"
             # TODO: set version info (do this last)
