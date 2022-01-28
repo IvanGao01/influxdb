@@ -86,18 +86,15 @@ jobs:
       - run:
           name: Build packages
           command: |
-            sleep 1000
-
             set -x
             WORKING_DIR=$(pwd)
             OUTDIR=${WORKING_DIR}/packages
-            mkdir -p ${OUTDIR}/race
 
-            # Plutonium debs and rpms
+            # InfluxDB debs and rpms
             # linux
             "${WORKING_DIR}/releng/packages/build.bash" \
-              -s "/tmp/workspace/tarball/plutonium-src-${CIRCLE_SHA1}.tar.gz" \
-              -b "/tmp/workspace/bins/plutonium_bin_linux_amd64-${CIRCLE_SHA1}.tar.gz" \
+              -s "/tmp/workspace/tarball/influxdb-src-${CIRCLE_SHA1}.tar.gz" \
+              -b "/tmp/workspace/bins/influxdb_bin_linux_amd64-${CIRCLE_SHA1}.tar.gz" \
               -O linux -A amd64 \
               -o "$OUTDIR"
 
