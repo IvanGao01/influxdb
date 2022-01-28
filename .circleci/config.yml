@@ -95,6 +95,14 @@ jobs:
           name: Build packages
           command: |
             set -x
+            # used by packaging script
+            # TODO: replace with actual variables
+            printf '{
+              "version": "%s",
+              "branch": "%s",
+              "sha": "%s"
+            }' "1.9" "branch" "v1.9" > "./influxdb/.metadata.json"
+
             WORKING_DIR=$(pwd)
             OUTDIR=${WORKING_DIR}/packages
 
