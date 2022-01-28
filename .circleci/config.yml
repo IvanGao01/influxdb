@@ -31,6 +31,13 @@ jobs:
           name: Build source tarball
           command: |
             set -x
+            # used by packaging script
+            # TODO: replace with actual variables
+            printf '{
+              "version": "%s",
+              "branch": "%s",
+              "sha": "%s"
+            }' "1.9" "branch" "v1.9" > "./.metadata.json"
             mkdir -p ./tarball
             TARBALL_NAME="./tarball/influxdb-src-${CIRCLE_SHA1}.tar.gz"
             # TODO: set version info (do this last)
@@ -95,13 +102,6 @@ jobs:
           name: Build packages
           command: |
             set -x
-            # used by packaging script
-            # TODO: replace with actual variables
-            printf '{
-              "version": "%s",
-              "branch": "%s",
-              "sha": "%s"
-            }' "1.9" "branch" "v1.9" > "./.metadata.json"
 
             WORKING_DIR=$(pwd)
             OUTDIR=${WORKING_DIR}/packages
