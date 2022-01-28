@@ -34,7 +34,7 @@ jobs:
             mkdir -p ./tarball
             TARBALL_NAME="./tarball/influxdb-src-${CIRCLE_SHA1}.tar.gz"
             # TODO: set version info (do this last)
-            tar --exclude-vcs --exclude './tarball' -vczf "${TARBALL_NAME}" .
+            tar --exclude-vcs --exclude './tarball' --transform 'flags=r;s|^|influxdb/|' -vczf "${TARBALL_NAME}" .
       - store_artifacts:
           path: tarball/
       - persist_to_workspace:
@@ -101,7 +101,7 @@ jobs:
               "version": "%s",
               "branch": "%s",
               "sha": "%s"
-            }' "1.9" "branch" "v1.9" > "./influxdb/.metadata.json"
+            }' "1.9" "branch" "v1.9" > "./.metadata.json"
 
             WORKING_DIR=$(pwd)
             OUTDIR=${WORKING_DIR}/packages
@@ -266,11 +266,11 @@ workflows:
       - build_packages:
           requires:
             - build_binaries
-      - static_code_checks
-      - fluxtest
-      - unit_test
-      - unit_test_tsi
-      - unit_test_race
+              # - static_code_checks
+              # - fluxtest
+              # - unit_test
+              # - unit_test_tsi
+              # - unit_test_race
   daily:
     triggers:
       - schedule:
